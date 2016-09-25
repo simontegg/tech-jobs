@@ -1,5 +1,5 @@
 {
-  "host": "seek-app.feathersjs.com",
+  "host": "tech-jobs-144509.appspot.com",
   "port": 80,
   "sqlite": "SQLITE_DB",
   "public": "../public/",
