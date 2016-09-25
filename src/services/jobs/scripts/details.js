@@ -8,8 +8,8 @@ const once = require('pull-stream/sources/once')
 const flatten = require('pull-stream/throughs/flatten')
 const delay = require('pull-delay')
 
-const app = require('../../app')
-const getJob = require('../../lib/get-job')
+const app = require('../../../app')
+const getJob = require('../../../lib/get-job')
   
 const jobService = app.service('jobs')
 

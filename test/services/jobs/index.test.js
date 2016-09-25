@@ -1,4 +1,3 @@
-'use strict';
 const testData = require('../../../data/test-data/jobs')
 const app = require('../../../src/app')
 const db = require('../../../data')

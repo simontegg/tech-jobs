@@ -1,4 +1,3 @@
-'use strict';
 
 // Add any common hooks you want to share across services in here.
 // 

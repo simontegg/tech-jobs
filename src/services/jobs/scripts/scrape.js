@@ -10,7 +10,7 @@ const filter = require('pull-stream/throughs/filter')
 const onEnd = require('pull-stream/sinks/on-end')
 
 const _ = require('lodash')
-const app = require('../../app')
+const app = require('../../../app')
 
 
 const jobService = app.service('jobs')
@@ -77,7 +77,6 @@ function keywords (searchTerms) {
 
 function generateURL (searchTerms, page) {
   return `${Url.format(config)}&keywords=${keywords(searchTerms)}&page=${page}`
-
 }
 
 

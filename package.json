@@ -13,14 +13,12 @@
   "contributors": [],
   "bugs": {},
   "engines": {
-    "node": ">= 0.12.0"
+    "node": ">= 6.5"
   },
   "scripts": {
     "test": "NODE_ENV=test npm run ava",
     "ava": "ava test/services/jobs/**.js --serial",
-    "jshint": "jshint src/. test/. --config",
-    "start": "node src/",
-    "mocha": "mocha test/ --recursive"
+    "start": "node src/"
   },
   "dependencies": {
     "body-parser": "^1.15.2",
@@ -39,11 +37,9 @@
     "gramophone": "0.0.3",
     "knex": "^0.12.1",
     "lodash": "^4.16.1",
-    "natural": "^0.4.0",
     "nightmare": "^2.7.0",
     "passport": "^0.3.2",
     "pull-stream": "^3.4.5",
-    "sequelize": "^3.24.3",
     "serve-favicon": "^2.3.0",
     "sqlite3": "^3.1.4",
     "superagent": "^2.3.0",
@@ -51,8 +47,6 @@
   },
   "devDependencies": {
     "ava": "^0.16.0",
-    "jshint": "^2.9.3",
-    "mocha": "^3.0.2",
     "request": "^2.75.0"
   }
 }
