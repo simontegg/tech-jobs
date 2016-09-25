@@ -42,7 +42,6 @@ pull(
   flatten(),
   pullMap(term => {
     length ++
-    console.log(term, length)
     return term
   }),
   asyncMap(termService.createCb),

@@ -57,10 +57,6 @@ function recurseSeek (searchTerms, page) {
       asyncMap(jobService.exist),
       filter(job => !job.exist),
       pullMap(job => { delete job.exist; return job }),
-      pullMap(r => {
-        console.log(r)
-        return r
-      }),
       asyncMap(jobService.createCb),
       onEnd(() => {
         console.log('result', result.next)
