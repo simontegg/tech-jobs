@@ -63,9 +63,6 @@ module.exports = function () {
 
 
   // Initialize our service with any options it requires
-  app.use('/terms', serviceObject)
-
-  // Get our initialize service to that we can bind hooks
-  const termsService = app.service('/jobs');
+  app.use('api/v1/terms', serviceObject)
 
 }

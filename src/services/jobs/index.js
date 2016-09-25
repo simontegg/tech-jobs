@@ -1,7 +1,6 @@
 'use strict'
 const db = require('../../../data')
 const service = require('feathers-knex')
-const hooks = require('./hooks')
 const extend = require('lodash/fp/extend')
 
 module.exports = function () {
@@ -75,14 +74,6 @@ module.exports = function () {
 
 
   // Initialize our service with any options it requires
-  app.use('/jobs', serviceObject)
+  app.use('api/v1/jobs', serviceObject)
 
-  // Get our initialize service to that we can bind hooks
-  const jobsService = app.service('/jobs');
-
-  // Set up our before hooks
-  jobsService.before(hooks.before);
-
-  // Set up our after hooks
-  jobsService.after(hooks.after);
 }
