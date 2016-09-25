@@ -1,0 +1,13 @@
+{
+  "host": "localhost",
+  "port": 3030,
+  "sqlite": "../data/seek.sqlite",
+  "public": "../public/",
+  "auth": {
+    "idField": "id",
+    "token": {
+      "secret": "2GW4hgw/jQv/PJYYnJti2XMJPqNXb3q0ctWYl6yZxeZA1IU5xH4YyLFbm2Z2b5cszJcf+um4Jv3RNGn3bQuF/w=="
+    },
+    "local": {}
+  }
+}
