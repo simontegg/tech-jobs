@@ -41,10 +41,19 @@ module.exports = {
     useNullAsDefault: true
   },
 
+  // pushing dev database to production
   production: {
+    client: 'sqlite3',
+    connection: {
+      filename: PATHS.development
+    },
     migrations: {
+      directory: PATHS.migrations,
       tableName: 'knex_migrations'
-    }
+    },
+    seeds: {
+      directory: PATHS.seeds
+    },
+    useNullAsDefault: true
   }
-
 }
