@@ -11,6 +11,7 @@ module.exports = function () {
     }, 
 
     find: function (params, callback) {
+      console.log(db)
       const termService = this.app.service('terms') 
       const end = parseInt(new Date().getTime() / 1000)
       let counts

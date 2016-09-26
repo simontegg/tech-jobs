@@ -9,7 +9,6 @@ const PATHS = {
   seeds: path.join(__dirname, '/data/seeds')
 }
 
-
 module.exports = {
 
   development: {
