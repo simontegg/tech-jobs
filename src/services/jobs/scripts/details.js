@@ -22,10 +22,6 @@ pull(
     getJob(row.url, cb)
   }),
   asyncMap(jobService.updateCb),
-  map(r => {
-    console.log(r)
-    return r
-  }),
   onEnd(() => {
     console.log('done')
   })

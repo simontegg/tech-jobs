@@ -1,25 +1,25 @@
+// pull streams
 const pull = require('pull-stream/pull')
 const pullMap = require('pull-stream/throughs/map')
 const asyncMap = require('pull-stream/throughs/async-map')
-const values = require('pull-stream/sources/values')
-const filter = require('pull-stream/throughs/filter')
 const onEnd = require('pull-stream/sinks/on-end')
 const once = require('pull-stream/sources/once')
 const flatten = require('pull-stream/throughs/flatten')
-const delay = require('pull-delay')
+
+// modules
 const gramophone = require('gramophone')
 const concat = require('lodash/fp/concat')
 const map = require('lodash/fp/map')
 
 // local
 const app = require('../../app')
-const jobService = app.service('jobs')
+const jobDb = require('./jobs-db')
+// TODO transform to termDb
 const termService = app.service('terms')
-let length = 0
 
 pull(
   once('listing_date'),
-  asyncMap(jobService.whereNotNull),
+  asyncMap(jobDb.whereNotNull),
   flatten(),
   pullMap(job => {
     const ngrams = gramophone.extract(
@@ -40,10 +40,6 @@ pull(
     }))(concat(ngrams, terms))
   }),
   flatten(),
-  pullMap(term => {
-    length ++
-    return term
-  }),
   asyncMap(termService.createCb),
   onEnd(() => {
     console.log('done')

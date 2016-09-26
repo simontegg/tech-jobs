@@ -33,6 +33,6 @@ module.exports = function () {
     }
   }
 
-  app.use('api/v1/stats', serviceObject)
+  app.use('api/v1/time-series', serviceObject)
 }
 

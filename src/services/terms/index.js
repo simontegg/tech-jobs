@@ -1,19 +1,9 @@
 const db = require('../../../data')
 const service = require('feathers-knex')
-const extend = require('lodash/fp/extend')
 
 module.exports = function () {
   const app = this
-
-  const options = {
-    Model: db,
-    name: 'terms',
-    id: 'url'
-  }
-
-  const serviceObject = extend(service(options), {
-
-    db: () => db('terms'),
+  const serviceObject = {
 
     whereSelect: (params, callback) => {
       db('terms')
@@ -57,10 +47,7 @@ module.exports = function () {
         .update(job)
         .asCallback(callback)
     }
-
-
-  })
-
+  }
 
   // Initialize our service with any options it requires
   app.use('api/v1/terms', serviceObject)
