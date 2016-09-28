@@ -13,25 +13,15 @@ const filter = require('pull-stream/throughs/filter')
 const onEnd = require('pull-stream/sinks/on-end')
 
 // local
-const jobDB = require('./jobs-db')
+const jobDb = require('./jobs-db')
+console.log('jobDB', jobDb)
 const seek = require('./seek')
 
-module.exports = function recurseSeek (searchTerms, page) {
-  co(function* () {
-    const result = yield seek(generateURL(searchTerms, page))
+module.exports = recurseSeek
 
-    pull(
-      values(result.links),
-      asyncMap(jobDb.exist),
-      filter(job => !job.exist),
-      pullMap(job => { delete job.exist; return job }),
-      asyncMap(jobDb.createCb),
-      onEnd(() => {
-        if (result.next) {
-          recurseSeek(searchTerms, result.next) 
-        }
-      })
-    )
+function recurseSeek (searchTerms, page) {
+  seek(generateURL(searchTerms, page), (err, result) => {
+    insertJob(result.links, result.next, searchTerms)
   })
 }
 
@@ -43,4 +33,22 @@ function generateURL (searchTerms, page) {
   return `${Url.format(seekUrlConfig)}&keywords=${keywords(searchTerms)}&page=${page}`
 }
 
-
+function insertJob (links, next, searchTerms) {
+  pull(
+    values(links),
+    pullMap(link => {
+      console.log(link)
+      return link
+    }),
+    asyncmap(jobdb.exist),
+    filter(job => !job.exist),
+    pullMap(job => { delete job.exist; return job }), 
+    asyncMap(jobDb.createCb),
+    onEnd(() => {
+      console.log('end', next)
+      if (next) {
+        recurseSeek(searchTerms, next) 
+      }
+    })
+  )
+}

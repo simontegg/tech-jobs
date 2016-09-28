@@ -1,11 +1,11 @@
 const Nightmare = require('nightmare')
 
-module.exports = function seek (url) {
+module.exports = function seek (url, callback) {
   //console.log('url', url)
 
-  return new Nightmare()
+  return new Nightmare({show: false})
   .goto(url)
-  .wait()
+  .wait(7000)
   .evaluate(function () {
     var links = []
 
@@ -18,4 +18,8 @@ module.exports = function seek (url) {
     return { links: links, next: $('dd.next-page > a').attr('data-page') }
   })
   .end()
+  .then((result) => {
+    callback(null, result)
+  })
+  .catch(callback)
 }

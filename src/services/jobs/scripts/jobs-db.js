@@ -1,4 +1,4 @@
-const db = require('../../../data')
+const db = require('../../../../data')
 
 module.exports = {
   whereSelect: (params, callback) => {
@@ -31,19 +31,20 @@ module.exports = {
     })
   },
 
-  exist: (job, callback) => {
+  exist: (jobUrl, callback) => {
     db('jobs')
     .select()
-    .where('url', job.url)
+    .where('url', jobUrl)
     .asCallback((err, rows) => {
+      console.log('r', rows)
       if (err) callback(err)
-        else callback(null, { url: job.url, exist: rows.length !== 0 })
+      else callback(null, { url: jobUrl, exist: rows.length !== 0 })
     })
   },
 
   createCb: (job, callback) => {
     db('jobs')
-    .insert(job, 'url')
+    .insert(job)
     .asCallback(callback)
   },
 

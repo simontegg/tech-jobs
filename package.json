@@ -37,6 +37,8 @@
     "gramophone": "0.0.3",
     "knex": "^0.12.1",
     "lodash": "^4.16.1",
+    "moment": "^2.15.1",
+    "moment-range": "^2.2.0",
     "nightmare": "^2.7.0",
     "passport": "^0.3.2",
     "pull-stream": "^3.4.5",

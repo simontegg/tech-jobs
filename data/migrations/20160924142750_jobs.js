@@ -1,9 +1,8 @@
 
-
 exports.up = function(knex, Promise) {
   return knex.schema.createTableIfNotExists('jobs', table => {
     table.string('url').primary()
-    table.dateTime('listing_date')
+    table.date('listing_date')
     table.string('heading')
     table.string('text')
     table.integer('text_length')
