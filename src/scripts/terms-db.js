@@ -2,53 +2,43 @@ const db = require('../../../data')
 
 module.exports = {
   whereSelect: (params, callback) => {
-    db('jobs')
+    db('terms')
     .select(params.rows || '*')
     .where(params.query || {})
     .asCallback(callback)
   },
 
   whereNotNull: (column, callback) => {
-    db('jobs')
+    db('terms')
     .whereNotNull(column)
     .asCallback(callback)
   },
 
   where: (query, callback) => {
-    db('jobs')
+    db('terms')
     .select()
     .where(query)
     .asCallback(callback)
   },
 
-  getCb: (url, callback) => {
-    db('jobs')
+  get: (term, callback) => {
+    db('terms')
     .select()
-    .where('url', url)
+    .where('term', term)
     .asCallback((err, rows) => {
       if (err) callback(err)
         else callback(null, rows[0])
     })
   },
 
-  exist: (job, callback) => {
-    db('jobs')
-    .select()
-    .where('url', job.url)
-    .asCallback((err, rows) => {
-      if (err) callback(err)
-        else callback(null, { url: job.url, exist: rows.length !== 0 })
-    })
-  },
-
-  createCb: (job, callback) => {
-    db('jobs')
-    .insert(job, 'url')
+  createCb: (term, callback) => {
+    db('terms')
+    .insert(term)
     .asCallback(callback)
   },
 
-  updateCb: (job, callback) => {
-    db('jobs')
+  updateCb: (term, callback) => {
+    db('terms')
     .where('url', job.url)
     .update(job)
     .asCallback(callback)

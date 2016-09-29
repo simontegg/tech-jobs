@@ -1,7 +1,9 @@
 const testData = require('../../../data/test-data/jobs')
+console.log('testData', testData)
 const app = require('../../../src/app')
 const db = require('../../../data')
 const test = require('ava')
+const jobDb = require('../../../src/services/jobs/scripts/jobs-db')
 
 test.beforeEach(t => {
  return db.migrate.latest()
@@ -16,10 +18,9 @@ test.afterEach.always(t => {
   return db.migrate.rollback()
 })
 
-test.cb('jobService.exist() returns true for existing test data', t => {
+test.cb('jobDb.exist() returns true for existing test data', t => {
   const d = testData[0]
-  const jobsService = app.service('jobs')
-  jobsService.exist(d.url, (err, job) => {
+  jobDb.exist(d.url, (err, job) => {
     t.is(job.url, d.url)
     t.true(job.exist)
     t.end()
@@ -29,8 +30,7 @@ test.cb('jobService.exist() returns true for existing test data', t => {
 test.cb('jobService.createCb() adds', t => {
   const goog = { url: 'http://google.com' }
 
-  const jobsService = app.service('jobs')
-  jobsService.createCb(goog, (err, job) => {
+  jobDb.createCb(goog, (err, job) => {
     db('jobs')
         .select()
         .where('url', goog.url)

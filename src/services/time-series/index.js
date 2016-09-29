@@ -1,38 +1,36 @@
 const db = require('../../../data')
-const extend = require('lodash/fp/extend')
-const timeSeries = require('../../lib/time-series')
-const percentage = require('../../lib/percentage')
+const hooks = require('../hooks')
+const createService = require('feathers-knex')
+const monthsRoute =  'api/v1/time-series/months'
+const weeksRoute =  'api/v1/time-series/weeks'
+
 
 module.exports = function () {
   const app = this
-  const serviceObject = {
-    setup: function (app) {
-      this.app = app
-    }, 
-
-    find: function (params, callback) {
-      console.log(db)
-      const termService = this.app.service('terms') 
-      const end = parseInt(new Date().getTime() / 1000)
-      let counts
-      return db('terms')
-        .join('jobs', 'job_url', '=', 'url')
-        .where(params.query)
-        .select()
-        .then(terms => {
-          counts = timeSeries(terms, 'listing_date', params.query.term, end)
-          return db('jobs')
-            .select()
-        })
-        .then(jobs => {
-          return percentage(
-            timeSeries(jobs, 'listing_date', 'all', end),
-            counts
-          )
-        })
+  const months = createService({
+    Model: db,
+    name: 'months',
+    paginate: {
+      default: 100,
+      max: 100
     }
-  }
+  })
 
-  app.use('api/v1/time-series', serviceObject)
+  const weeks = createService({
+    Model: db,
+    name: 'weeks',
+    paginate: {
+      default: 100,
+      max: 100
+    }
+  })
+  
+  app.use(monthsRoute, months)
+  app.use(weeksRoute, weeks)
+  
+  const monthService = app.service(monthsRoute)
+  monthService.before(hooks.before)
+  
+  const weekService = app.service(weeksRoute)
+  weekService.before(hooks.before)
 }
-

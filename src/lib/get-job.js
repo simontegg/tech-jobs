@@ -1,4 +1,5 @@
 const Nightmare = require('nightmare')
+const moment = require('moment')
 
 module.exports = getJob
 
@@ -9,9 +10,7 @@ function getJob (url, callback) {
     .evaluate(function (url) {
       return {
         url: url,
-        listing_date: convertToUnix(
-          document.querySelector('.mod-job-details > strong').textContent
-        ),
+        listing_date: document.querySelector('.mod-job-details > strong').textContent,
         heading: document.querySelector('.grid_6 > h1').textContent,
         text: $('.templatetext').text(),
         location: $('span[itemprop="addressRegion"]').text()
@@ -23,8 +22,4 @@ function getJob (url, callback) {
       callback(null, result)
     })
     .catch(callback)
-}
-
-function convertToUnix (text) {
-  return new Date(text).getTime() / 1000
 }
