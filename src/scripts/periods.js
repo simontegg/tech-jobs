@@ -1,4 +1,4 @@
-const db = require('../../../../data')
+const db = require('../../data')
 
 // pull streams
 const pull = require('pull-stream/pull')
@@ -16,68 +16,65 @@ const _ = require('lodash')
 const moment = require('moment')
 require('moment-range')
 
-function termCountsPerMonth (callback) {
+function termCountsPerPeriod (period, callback) {
+  const format = period === 'month' ? "'%Y-%m'" : "'%Y-%W'"
   db.raw(
     `select count(distinct job_url) as total_jobs, 
-    strftime('%Y-%m', listing_date) as month, 
+    strftime(${format}, listing_date) as ${period}, 
     sum(document_frequency) as total_mentions,
     term from terms 
     inner join jobs on terms.job_url = jobs.url
-    group by term, month`)
+    group by term, ${period}`)
     .asCallback(callback)
 }
 
-function jobsPerMonth (callback) {
+function jobsPerPeriod (period, callback) {
+  const format = period === 'month' ? "'%Y-%m'" : "'%Y-%W'"
+
   db.raw(
-    `select count(distinct url) as jobs_per_month,
-    strftime('%Y-%m', listing_date) as month
+    `select count(distinct url) as jobs_per_${period},
+    strftime(${format}, listing_date) as ${period}
     from jobs 
-    where month is not null
-    group by month`
+    where ${period} is not null
+    group by ${period}`
   )
   .asCallback(callback)
 }
 
-
-
-function insertOrUpdateMonth (termCount, callback) {
-    db('months')
+const insertOrUpdate = period => (termCount, callback) => {
+    db(`${period}s`)
       .where(termCount)
       .select()
       .asCallback((err, rows) => {
         if (rows.length > 0) {
-          db('months')
+          db(`${period}s`)
             .where('rowId', rows[0].rowId)
             .update(termCountA)
             .asCallback(callback)
         } else {
-          db('months')
+          db(`${period}s`)
             .insert(termCount)
             .asCallback(callback)
         }
       })
 }
 
-
-jobsPerMonth((err, months) => {
-
-  const monthTotals = _.zipObject(
-    _.map(months, 'month'),
-    _.map(months, 'jobs_per_month')
+const period = 'week'
+jobsPerPeriod(period, (err, periods) => {
+  console.log('periods', periods)
+  const periodTotals = _.zipObject(
+    _.map(periods, period),
+    _.map(periods, `jobs_per_${period}`)
   )
 
-  termCountsPerMonth((err, termCounts) => {
+  termCountsPerPeriod(period, (err, termCounts) => {
+    console.log(termCounts, periodTotals)
     pull(
       values(termCounts),
       map(termCount => {
-        console.log(termCount)
-        return month(termCount, monthTotals[termCount.month])
+        return row(period, termCount, periodTotals[termCount[period]])
       }),
-      map(m => {
-        console.log(m)
-        return m
-      }),
-      asyncMap(insertOrUpdateMonth),
+      asyncMap(insertOrUpdate(period)),
       onEnd(() => {
         console.log('done')
       })
@@ -85,30 +82,17 @@ jobsPerMonth((err, months) => {
   })
 })
 
-function month (termCount, total) {
+function row (period, termCount, total) {
   return Object.assign(
     {}, 
     termCount, 
     { 
       percentage_of_jobs: termCount.total_jobs / total, 
-      month_term: `${termCount.month}_${termCount.term}` 
+      [`${period}_term`]: `${termCount[period]}_${termCount.term}` 
     }
   )
 }
 
-function monthStartAndEndsFrom (startMonth) { // start: YYYY-MM
-  const months = []
-  const range = moment.range(moment(startMonth, 'YYYY-MM'), moment())
-  range.by('month', m => {
-    months.push(
-      [
-        m.startOf('month').format('YYYY-MM-DD'), 
-        m.endOf('month').format('YYYY-MM-DD')
-      ]
-    )
-  })
-  return months
-}
 
 
 

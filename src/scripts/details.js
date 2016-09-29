@@ -1,27 +1,33 @@
+// pull streams
 const pull = require('pull-stream/pull')
 const map = require('pull-stream/throughs/map')
 const asyncMap = require('pull-stream/throughs/async-map')
-const values = require('pull-stream/sources/values')
-const filter = require('pull-stream/throughs/filter')
 const onEnd = require('pull-stream/sinks/on-end')
 const once = require('pull-stream/sources/once')
 const flatten = require('pull-stream/throughs/flatten')
 const delay = require('pull-delay')
 
-const app = require('../../../app')
-const getJob = require('../../../lib/get-job')
-  
-const jobService = app.service('jobs')
+// modules
+const moment = require('moment')
+
+// local
+const getJob = require('../lib/get-job')
+const jobsDb = require('./jobs-db')
 
 pull(
   once({ text: null }),
-  asyncMap(jobService.where),
+  asyncMap(jobsDb.where),
   flatten(),
   delay(500),
   asyncMap((row, cb) => {
     getJob(row.url, cb)
   }),
-  asyncMap(jobService.updateCb),
+  map(job => {
+    job.listing_date = moment(job.listing_date, 'DD MMM YYYY')
+      .format('YYYY-MM-DD')
+    return job
+  }),
+  asyncMap(jobsDb.updateCb),
   onEnd(() => {
     console.log('done')
   })

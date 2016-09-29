@@ -13,7 +13,5 @@ This project uses [Feathers](http://feathersjs.com). An open source web framewor
 
  paginate terms routes
 
- script to populate a 'months' table
- script to populate a 'weeks' table
 
 

@@ -1,10 +1,8 @@
 // main
 const Url = require('url')
-const co = require('co')
 const map = require('lodash/fp/map')
 
 // pull streams
-const seekUrlConfig = require('./seek-url-config')
 const pull = require('pull-stream/pull')
 const pullMap = require('pull-stream/throughs/map')
 const asyncMap = require('pull-stream/throughs/async-map')
@@ -13,8 +11,8 @@ const filter = require('pull-stream/throughs/filter')
 const onEnd = require('pull-stream/sinks/on-end')
 
 // local
+const seekUrlConfig = require('./seek-url-config')
 const jobDb = require('./jobs-db')
-console.log('jobDB', jobDb)
 const seek = require('./seek')
 
 module.exports = recurseSeek

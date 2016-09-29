@@ -2,8 +2,6 @@ const jobs = require('./jobs')
 const timeSeries = require('./time-series')
 const terms = require('./terms')
 
-const path = require('path')
-const fs = require('fs-extra')
 module.exports = function() {
   const app = this
 

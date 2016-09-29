@@ -12,10 +12,8 @@ const concat = require('lodash/fp/concat')
 const map = require('lodash/fp/map')
 
 // local
-const app = require('../../app')
 const jobDb = require('./jobs-db')
-// TODO transform to termDb
-const termService = app.service('terms')
+const termDb = require('./terms-db')
 
 pull(
   once('listing_date'),
@@ -40,7 +38,7 @@ pull(
     }))(concat(ngrams, terms))
   }),
   flatten(),
-  asyncMap(termService.createCb),
+  asyncMap(termDb.createCb),
   onEnd(() => {
     console.log('done')
   })
