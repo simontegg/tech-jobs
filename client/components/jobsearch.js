@@ -1,23 +1,19 @@
 import React, { Component } from 'react'
-import SearchInput from './searchinput'
-import DatePicker from './datePicker'
-import Location from './location'
-import Salary from './salary'
+import JobSearchSideBar from './JobSearchSideBar'
+import JobSearchContent from './JobSearchContent'
 
-class Jobsearch extends Component {
+class JobSearch extends Component {
 
   render () {
     return (
-      <div>
-        <h1>Job Search</h1>
-        <SearchInput />
-        <DatePicker />
-        <DatePicker />
-        <Location />
-        <Salary />
+      <div className="container" style={{paddingTop:'30px'}}>
+        <div className="row">
+          <JobSearchSideBar />
+          <JobSearchContent />
+        </div>
       </div>
     )
   }
 }
 
-export default Jobsearch
+export default JobSearch
