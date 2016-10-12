@@ -2,14 +2,14 @@ const db = require('../../../data')
 const hooks = require('../hooks')
 const createService = require('feathers-knex')
 
-module.exports = function () {
+module.exports = function (defaultNum, max) {
   const app = this
   const service = createService({
     Model: db,
     name: 'jobs',
     paginate: {
-      default: 10,
-      max: 100
+      default: defaultNum || 10,
+      max: max || 100
     }
   })
 
