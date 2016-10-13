@@ -6,8 +6,8 @@ class ChartsSideBar extends Component {
     return (
       <div className="col-md-3">
         <div className="list-group">
-          <Link to="/charts/job-prevelence" className="list-group-item">
-            <h4 className="list-group-item-heading">Job Prevelence</h4>
+          <Link to="/charts/job-prevalence" className="list-group-item">
+            <h4 className="list-group-item-heading">Job Prevalence</h4>
             <p className="list-group-item-text">...</p>
           </Link>
         </div>

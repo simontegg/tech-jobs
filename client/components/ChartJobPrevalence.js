@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 
 
-class ChartJobPrevelence extends Component {
+class ChartJobPrevalence extends Component {
 
   render () {
     return (
@@ -13,4 +13,4 @@ class ChartJobPrevelence extends Component {
 
 }
 
-export default ChartJobPrevelence
+export default ChartJobPrevalence

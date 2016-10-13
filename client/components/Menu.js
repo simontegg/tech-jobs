@@ -60,7 +60,7 @@ class Menu extends Component {
         <div className="container">
           <ul className="nav nav-tabs nav-justified">
             <li role="presentation" className="active"><Link to="/search">Search</Link></li>
-            <li role="presentation"><Link to="/charts">Charts</Link></li>
+            <li role="presentation"><Link to="/charts">Visualization</Link></li>
           </ul>
         </div>
       </div>
