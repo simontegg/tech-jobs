@@ -5,10 +5,10 @@ import JobSearch from './components/JobSearch'
 import Charts from './components/Charts'
 import ChartJobPrevalence from './components/ChartJobPrevalence'
 import ChartJobAmountBasedOnTech from './components/ChartJobAmountBasedOnTech'
-import { Router, Route, hashHistory } from 'react-router'
+import { Router, Route, browserHistory } from 'react-router'
 
 ReactDOM.render(
-  <Router history={hashHistory}>
+  <Router history={browserHistory}>
       <Route path="/" component={App}>
         <Route path="/search" component={JobSearch}/>
         <Route path="/charts" component={Charts}>
