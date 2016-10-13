@@ -33,7 +33,7 @@ class JobSearch extends Component {
   }
 
   render () {
-    console.log('this.props.api ', this.props.api)
+    console.log('api ', api)
     // temporary
     var term = 'time-series/weeks?term=react'
     {var x = this.getJobs()}
