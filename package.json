@@ -34,6 +34,7 @@
     "cors": "^2.8.1",
     "feathers": "^2.0.2",
     "feathers-authentication": "^0.7.10",
+    "feathers-client": "*",
     "feathers-configuration": "^0.3.3",
     "feathers-errors": "^2.4.0",
     "feathers-hooks": "^1.5.7",

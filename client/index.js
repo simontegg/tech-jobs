@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM, { render } from 'react-dom'
-import App from './components/app'
+import App from './components/App'
 import JobSearch from './components/JobSearch'
 import Charts from './components/Charts'
 import ChartJobPrevalence from './components/ChartJobPrevalence'
