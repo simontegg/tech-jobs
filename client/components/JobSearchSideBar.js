@@ -1,6 +1,24 @@
-import React, { Component } from 'react'
+import React from 'react'
 
-class JobSearchSideBar extends Component {
+class JobSearchSideBar extends React.Component {
+
+  constructor (props) {
+    super (props)
+    this.state = {
+      keyword: ''
+    }
+    this.handleChange = this.handleChange.bind(this)
+  }
+
+  handleChange (e) {
+    this.setState({keyword: e.target.value})
+  }
+
+  handleSubmit (e) {
+    e.preventDefault()
+    this.props.searchTerm(this.state.keyword)
+  }
+
   render() {
     return (
       <div className="col-md-3">
@@ -8,7 +26,7 @@ class JobSearchSideBar extends Component {
           <div className="form-group">
             <label className="col-sm-3 control-label">keyword</label>
             <div className="col-sm-9">
-              <input type="text" className="form-control" id="inputEmail3" placeholder="Keyword" />
+              <input type="text" className="form-control" id="inputEmail3" placeholder="Keyword" onChange={this.handleChange} />
             </div>
           </div>
           <div className="form-group">
@@ -45,7 +63,7 @@ class JobSearchSideBar extends Component {
           </div>
           <div className="form-group">
             <div className="col-sm-12">
-              <button type="submit" className="btn btn-default  center-block">Search</button>
+              <button type="submit" className="btn btn-default  center-block" onSubmit={this.handleSubmit}>Search</button>
             </div>
           </div>
         </form>

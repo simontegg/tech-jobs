@@ -21,9 +21,24 @@ class JobSearch extends Component {
      })
    }
 
+  // searchTerm (term) {
+  //   const weeks = api.service('weeks')
+  //   weeks.get()
+  //   .then((res) => {
+  //     console.log("RESULT ", res)
+  //   })
+  //   .catch(err => {
+  //     console.log("ERROR ", err)
+  //   })
+  // }
+
   searchTerm (term) {
-    const jobsByTerm = api.service(`/api/v1/${term}`)
-    jobsByTerm.get()
+    const period = api.service('api/v1/time-series/weeks')
+    period.find({
+      query: {
+        term
+      }
+    })
     .then((res) => {
       console.log("RESULT ", res)
     })
@@ -33,16 +48,10 @@ class JobSearch extends Component {
   }
 
   render () {
-    console.log('api ', api)
-    // temporary
-    var term = 'time-series/weeks?term=react'
-    {var x = this.getJobs()}
-    {var x = this.searchTerm(term)}
-
     return (
       <div className="container" style={{paddingTop:'30px'}}>
         <div className="row">
-          <JobSearchSideBar />
+          <JobSearchSideBar searchTerm = {this.searchTerm}/>
           <JobSearchContent />
         </div>
       </div>
