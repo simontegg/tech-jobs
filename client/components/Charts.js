@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import ChartsSideBar from './ChartsSideBar'
-class Charts extends Component {
 
+class Charts extends Component {
   render () {
     return (
       <div className="container" style={{paddingTop:'30px'}}>

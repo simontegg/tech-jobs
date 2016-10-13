@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import JobSearch from './JobSearch'
 import Menu from './Menu'
 
 class App extends Component {
