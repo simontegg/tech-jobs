@@ -7,7 +7,6 @@ class Charts extends Component {
     return (
       <div>
         <h1>Charts Container</h1>
-        <BarGraph />
       </div>
     )
   }

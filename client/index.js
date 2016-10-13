@@ -1,11 +1,15 @@
-
 import React from 'react'
-import { render } from 'react-dom'
-import injectTapEventPlugin from 'react-tap-event-plugin'
+import ReactDOM, { render } from 'react-dom'
 import App from './components/app'
-import api from '../src/services'
+import {HashRouter} from 'react-router'
 
-injectTapEventPlugin()
-
-render(<App name='job-search' api={api}/>, document.querySelector('main'))
-console.log('welcome to job-search')
+ReactDOM.render(
+  <HashRouter>
+    {({router}) => {
+      return (
+      <App router={router} />
+      )
+    }}
+  </HashRouter>
+  , document.querySelector('main')
+)
