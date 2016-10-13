@@ -8,6 +8,7 @@ class JobSearchSideBar extends React.Component {
       keyword: ''
     }
     this.handleChange = this.handleChange.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
 
   handleChange (e) {
@@ -22,7 +23,7 @@ class JobSearchSideBar extends React.Component {
   render() {
     return (
       <div className="col-md-3">
-        <form className="form-horizontal">
+        <form className="form-horizontal" onSubmit={this.handleSubmit}>
           <div className="form-group">
             <label className="col-sm-3 control-label">keyword</label>
             <div className="col-sm-9">
@@ -63,7 +64,7 @@ class JobSearchSideBar extends React.Component {
           </div>
           <div className="form-group">
             <div className="col-sm-12">
-              <button type="submit" className="btn btn-default  center-block" onSubmit={this.handleSubmit}>Search</button>
+              <button type="submit" className="btn btn-default  center-block" >Search</button>
             </div>
           </div>
         </form>
