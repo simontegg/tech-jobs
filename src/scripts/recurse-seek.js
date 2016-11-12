@@ -17,9 +17,10 @@ const seek = require('./seek')
 
 module.exports = recurseSeek
 
-function recurseSeek (searchTerms, page) {
+function recurseSeek (searchTerms, page, done) {
   seek(generateURL(searchTerms, page), (err, result) => {
-    insertJob(result.links, result.next, searchTerms)
+    console.log(result)
+    insertJob(result.links, result.next, searchTerms, done)
   })
 }
 
@@ -31,21 +32,21 @@ function generateURL (searchTerms, page) {
   return `${Url.format(seekUrlConfig)}&keywords=${keywords(searchTerms)}&page=${page}`
 }
 
-function insertJob (links, next, searchTerms) {
+function insertJob (links, next, searchTerms, done) {
+  console.log('insertJob')
   pull(
     values(links),
-    pullMap(link => {
-      console.log(link)
-      return link
-    }),
-    asyncmap(jobdb.exist),
-    filter(job => !job.exist),
-    pullMap(job => { delete job.exist; return job }), 
+    pullMap((link) => link.url),
+    asyncMap(jobDb.exist),
+    filter((job) => !job.exist),
+    pullMap((job) => { delete job.exist; return job }), 
     asyncMap(jobDb.createCb),
     onEnd(() => {
-      console.log('end', next)
       if (next) {
-        recurseSeek(searchTerms, next) 
+        console.log('do next')
+        recurseSeek(searchTerms, next, done) 
+      } else {
+        done(null)
       }
     })
   )

@@ -1,6 +1,8 @@
 const Nightmare = require('nightmare')
 const moment = require('moment')
 
+
+
 module.exports = getJob
 
 function getJob (url, callback) {
@@ -17,9 +19,6 @@ function getJob (url, callback) {
       }
     }, url)
     .end()
-    .then(result => {
-      console.log('res', result)
-      callback(null, result)
-    })
+    .then((result) => callback(null, result))
     .catch(callback)
 }

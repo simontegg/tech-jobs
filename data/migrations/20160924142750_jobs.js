@@ -9,6 +9,7 @@ exports.up = function(knex, Promise) {
     table.string('location')
     table.integer('salary_min')
     table.integer('salary_max')
+    table.boolean('indexed')
   })
 }
 

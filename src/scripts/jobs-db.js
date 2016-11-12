@@ -7,6 +7,12 @@ module.exports = {
     .where(params.query || {})
     .asCallback(callback)
   },
+  
+  whereNull: (column, callback) => {
+    db('jobs')
+    .whereNull(column)
+    .asCallback(callback)
+  },
 
   whereNotNull: (column, callback) => {
     db('jobs')
@@ -36,7 +42,6 @@ module.exports = {
     .select()
     .where('url', jobUrl)
     .asCallback((err, rows) => {
-      console.log('r', rows)
       if (err) callback(err)
       else callback(null, { url: jobUrl, exist: rows.length !== 0 })
     })

@@ -9,6 +9,9 @@ const hooks = require('feathers-hooks')
 const rest = require('feathers-rest')
 const bodyParser = require('body-parser')
 
+// start scrape job
+require('./scripts/scrape')()
+
 const middleware = require('./middleware')
 const services = require('./services')
 
